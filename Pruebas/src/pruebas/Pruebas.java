@@ -4,8 +4,10 @@
  */
 package pruebas;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
+import java.lang.Math;
 
 /**
  *
@@ -45,8 +47,6 @@ public class Pruebas {
         
         c.set(Calendar.DAY_OF_MONTH, dia);
         
-        System.out.println(Calendar.DAY_OF_MONTH);
-        
         int yearDay =c.get(Calendar.DAY_OF_YEAR);
         
         if(yearDay > 20 && yearDay <= 50){
@@ -85,6 +85,25 @@ public class Pruebas {
         }else if(yearDay >= 356 && yearDay <= 19){
             System.out.println("Eres Capricornio");
         }
+        
+        System.out.println("Prediccion: ");
+        
+        ArrayList<String> predicciones = new ArrayList<String>();
+        
+        predicciones.add("Vas a morir en breve");
+        predicciones.add("Te va a ir bien en el trabajo");
+        predicciones.add("Pedro Sánchez va a aparecer en tu casa y te va a matar");
+        predicciones.add("Te vas a encontrar un billete de 300€");
+        predicciones.add("Te vas a quedar calvo/a");
+        predicciones.add("Vas a ir a comer al Domino's Pizza");
+        predicciones.add("Salva te va a mandar muchos ejercicios");
+        predicciones.add("Te van a invitar a un bocadillo xxl del Reyton");
+        predicciones.add("Un perro te va a morder el culo");
+        predicciones.add("Te va a tocar la lotería");
+        
+        int prediccion = (int) (Math.random() * (predicciones.size() - 0 + 1) + 0);
+        
+        System.out.println("Prediccion: " +  predicciones.get(prediccion));
         
         
        
