@@ -32,6 +32,7 @@ public class Neo {
 	
 	public static void main(String[] args) {
 		
+		//Crea un NEO a través de los parámetros leidos y ejecuta el método
 		Neo n = new Neo();
 		n.setNombre(args[0]);
 		n.setPosicionNEO(Double.parseDouble(args[1]));
@@ -44,6 +45,7 @@ public class Neo {
 	
 	public void CalcularProbabilidades() {
 		
+		//Obtiene el tiempo de ejecución
 		long inicio = System.currentTimeMillis();
 		
 		double posicionTierra = 1;
@@ -57,6 +59,7 @@ public class Neo {
 		double resultado = 100 * Math.random() *
 				Math.pow( ((posicionNEO-posicionTierra)/(posicionNEO+posicionTierra)), 2);
 		
+		//Salida para el fichero
 		String salida = "";
 		
 		salida += "Neo " + nombre + ": \n";
@@ -67,7 +70,8 @@ public class Neo {
 		}else {
 			salida += "Valores normales" + "\n";
 		}
-		
+        
+		//tiempo de ejecución final
         long fin = System.currentTimeMillis();
         
         double tiempo = (double) ((fin - inicio)/1000);
@@ -81,13 +85,11 @@ public class Neo {
 	public void EscribirFichero(String nombre, String salida) {
 		
 		//Ruta carpeta datos
-		File f = new File("C:\\Users\\DAM 2\\DocumentosPrueba\\NEOs");
-		if(!f.exists())
-			f.mkdir();
+		//File f = new File("C:\\Users\\DAM 2\\DocumentosPrueba\\NEOs");
 		
 		try {
 			
-			f= new File("C:\\Users\\DAM 2\\DocumentosPrueba\\NEOs\\" +nombre + ".txt");
+			File f= new File("D:\\DocumentosPrueba\\NEOs\\" +nombre + ".txt");
 			FileWriter fw = new FileWriter(f);
 			fw.write(salida);
 			fw.flush();
