@@ -5,18 +5,25 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" fx:id="scene" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #C3C1C0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pong.FXMLDocumentController">
     <children>
         <Button fx:id="button" layoutX="25.0" layoutY="25.0" onAction="#jugar" text="Jugar" />
       <Pane fx:id="tablero" layoutX="25.0" layoutY="61.0" prefHeight="500.0" prefWidth="750.0" style="-fx-background-color: white;">
          <children>
-            <Circle fx:id="pelota" fill="DODGERBLUE" layoutX="187.0" layoutY="127.0" radius="12.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
-            <Rectangle fx:id="player1" arcHeight="5.0" arcWidth="3.0" height="200.0" layoutX="31.0" layoutY="150.0" stroke="BLACK" strokeType="INSIDE" width="24.0" />
-            <Rectangle fx:id="player2" arcHeight="5.0" arcWidth="3.0" height="200.0" layoutX="682.0" layoutY="150.0" stroke="BLACK" strokeType="INSIDE" width="24.0" />
-            <Rectangle fx:id="margenBajo" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="11.0" layoutY="495.0" stroke="BLACK" strokeType="INSIDE" width="750.0" />
-            <Rectangle fx:id="margenArriba" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="11.0" stroke="BLACK" strokeType="INSIDE" width="750.0" />
+            <Circle fx:id="pelota" centerX="375.0" centerY="255.0" fill="DODGERBLUE" radius="12.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+            <Rectangle fx:id="player1" arcHeight="5.0" arcWidth="3.0" height="160.0" layoutX="20.0" layoutY="170.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+            <Rectangle fx:id="player2" arcHeight="5.0" arcWidth="3.0" height="160.0" layoutX="720.0" layoutY="170.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+            <Rectangle fx:id="margenIzquierda" arcHeight="5.0" arcWidth="5.0" fill="#f2f2f2" height="500.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1.0" />
+            <Rectangle fx:id="margenDerecha" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="500.0" layoutX="749.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1.0" />
          </children>
       </Pane>
+      <Text fx:id="marcador" layoutX="378.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 : 0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>
