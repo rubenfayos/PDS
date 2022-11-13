@@ -4,18 +4,25 @@
  */
 package pong;
 
+import java.io.FileInputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
@@ -52,6 +59,8 @@ public class FXMLDocumentController implements Initializable {
     
     private boolean pelotaFuego = false;
     
+    private AnimationTimer animationPowerUp;
+    
     private AnimationTimer animationPlayers;
     @FXML
     private AnchorPane scene;
@@ -84,11 +93,11 @@ public class FXMLDocumentController implements Initializable {
         @Override
         public void handle(long now) {
             
-        posX = pelota.getCenterX();
-        posY = pelota.getCenterY();
+        posX = pelota.getCenterX() + velocidadX;
+        posY = pelota.getCenterY() + velocidadY;
 
-        pelota.setCenterX(posX + velocidadX);
-        pelota.setCenterY(posY + velocidadY);
+        pelota.setCenterX(posX);
+        pelota.setCenterY(posY);
         
         //Comprueba si la posicion de la pelota y el jugador2 coinciden
         Shape shapeCollision1 = Shape.intersect(player2, pelota);
@@ -158,9 +167,7 @@ public class FXMLDocumentController implements Initializable {
             //Inclinacion aleatoria
             velocidadY = Math.random()*6;
             if(velocidadY>3)
-            velocidadY = velocidadY-6;
-
-            
+            velocidadY = velocidadY-6;    
         }
         
         
@@ -197,28 +204,57 @@ public class FXMLDocumentController implements Initializable {
             posY_jug1 += velJug1;
             posY_jug2 += velJug2;
             
-            player1.setY(posY_jug1);
-            player2.setY(posY_jug2);
+            player1.setLayoutY(posY_jug1);
+            player2.setLayoutY(posY_jug2);
             
             //Comprueba si la posicion de la pelota y el jugador2 coinciden
-            Shape shapeCollisionAbajor_jugador2 = Shape.intersect(player2, margenBajo);
-            boolean colisionVaciaAbajor_jugador1 =  shapeCollisionAbajor_jugador2.getBoundsInLocal().isEmpty();
-            
-        
-            if(!colisionVaciaAbajor_jugador1){
-                
-                posY_jug2 = margenBajo.getY() - player2.getHeight();
-            }
+            Shape shapeCollisionAbajo_jugador2 = Shape.intersect(player2, margenBajo);
+            boolean colisionVaciaAbajo_jugador2 =  shapeCollisionAbajo_jugador2.getBoundsInLocal().isEmpty();
             
             //Limites jugadores
+        
+            if(!colisionVaciaAbajo_jugador2){
+                
+                posY_jug2 = margenBajo.getLayoutY() - player2.getHeight();
+                
+            }
             
+            //Comprueba si la posicion de la pelota y el jugador2 coinciden
+            Shape shapeCollisionArriba_jugador2 = Shape.intersect(player2, margenArriba);
+            boolean colisionVaciaArriba_jugador2 =  shapeCollisionArriba_jugador2.getBoundsInLocal().isEmpty();
             
+            if(!colisionVaciaArriba_jugador2){
+                
+                posY_jug2 = margenArriba.getLayoutY();
+                
+            }
             
+            //Comprueba si la posicion de la pelota y el jugador2 coinciden
+            Shape shapeCollisionAbajo_jugador1 = Shape.intersect(player1, margenBajo);
+            boolean colisionVaciaAbajo_jugador1 =  shapeCollisionAbajo_jugador1.getBoundsInLocal().isEmpty();
+            
+            //Limites jugadores
+        
+            if(!colisionVaciaAbajo_jugador1){
+                
+                posY_jug1 = margenBajo.getLayoutY() - player1.getHeight();
+                
+            }
+            
+            //Comprueba si la posicion de la pelota y el jugador2 coinciden
+            Shape shapeCollisionArriba_jugador1 = Shape.intersect(player1, margenArriba);
+            boolean colisionVaciaArriba_jugador1 =  shapeCollisionArriba_jugador1.getBoundsInLocal().isEmpty();
+            
+            if(!colisionVaciaArriba_jugador1){
+                
+                posY_jug1 = margenArriba.getLayoutY();
+                
+            }
+ 
         }};
-    
+
      
     //Añade el listener para la una tecla pulsada
-    
     scene.setOnKeyPressed(e ->{
         
         if(e.getCode() == KeyCode.W){ velJug1 = -6; }
@@ -246,10 +282,7 @@ public class FXMLDocumentController implements Initializable {
         }); 
     
         animationPlayers.start();
-
-    
-    
-    
+ 
     }
     
     private void actualizarMarcador(){
@@ -395,8 +428,79 @@ public class FXMLDocumentController implements Initializable {
         puntosJugador1 = 0;
         puntosJugador2 = 0;
         
+        PowerUp();
         animationBall.start();
            
+    }
+    
+    private void PowerUp(){
+         
+
+        Image img = new Image(this.getClass().getResource("/res/marselo.png").toString());
+        ImageView powerUp = new ImageView(img);
+        powerUp.setFitHeight(100);
+        powerUp.setFitWidth(100);
+        powerUp.setLayoutX(325);
+        tablero.getChildren().add(powerUp);
+            
+        animationBall = new AnimationTimer() {
+        
+        double posXPowerUp = 0;
+        double posYPowerUp = 0;
+        
+        @Override
+        public void handle(long now) {
+            
+        posXPowerUp = 
+        posYPowerUp = pelota2.getCenterY();
+
+        pelota2.setCenterX(posX2 + velocidadX2);
+        pelota2.setCenterY(posY2 + velocidadY2);
+        
+        //Comprueba si la posicion de la pelota y el jugador2 coinciden
+        Shape shapeCollision1_pelota2 = Shape.intersect(player2, pelota2);
+        boolean colisionVacia1_pelota2 = shapeCollision1_pelota2.getBoundsInLocal().isEmpty();
+        
+        //Comprueba si la posicion de la pelota y el jugador1 coinciden
+        Shape shapeCollision2_pelota2 = Shape.intersect(player1, pelota2);
+        boolean colisionVacia2_pelota2 = shapeCollision2_pelota2.getBoundsInLocal().isEmpty();
+        
+        //Comprueba si choca abajo
+        Shape shapeCollisionBajo_pelota2 = Shape.intersect(margenBajo, pelota2);
+        boolean colisionVaciaBajo_pelota2 = shapeCollisionBajo_pelota2.getBoundsInLocal().isEmpty();
+ 
+        //Comprueba si choca arriba
+        Shape shapeCollisionArriba_pelota2 = Shape.intersect(margenArriba, pelota2);
+        boolean colisionVaciaArriba_pelota2 = shapeCollisionArriba_pelota2.getBoundsInLocal().isEmpty();
+        
+        //Comprueba si la pelota choca con la izquierda
+        Shape shapeCollisionIzquierda_pelota2 = Shape.intersect(margenIzquierda, pelota2);
+        boolean colisionVaciaIzquierda_pelota2 = shapeCollisionIzquierda_pelota2.getBoundsInLocal().isEmpty();
+        
+        //comprueba si la pelota choca con la derecha
+        Shape shapeCollisionDerecha_pelota2 = Shape.intersect(margenDerecha, pelota2);
+        boolean colisionVaciaDerecha_pelota2 = shapeCollisionDerecha_pelota2.getBoundsInLocal().isEmpty();
+        
+        if (!colisionVacia1_pelota2){
+            //Velocidad negativa para cambiar direccion
+            velocidadX2 = -8;
+        }
+
+        if (!colisionVacia2_pelota2){
+            velocidadX2 = 8;
+        }
+    
+        if (!colisionVaciaBajo_pelota2){
+            //Velocidad negativa para cambiar direccion
+            velocidadY2 = -3;
+        }
+    
+        if (!colisionVaciaArriba_pelota2){
+            velocidadY2 = 3;
+        }
+        
+    }
+        
     }
     
 }
