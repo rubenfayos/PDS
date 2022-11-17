@@ -16,7 +16,7 @@ public class Caracol implements Runnable{
 		String nombre = Thread.currentThread().getName();
 		
 		//Le asigna la velocidad aleatoriamente
-		double velocidad = 3 + (Math.random() * 10);
+		double velocidad = 7 + (Math.random() * 10);
 		carrera(nombre, velocidad);
 				
 	}
@@ -31,21 +31,31 @@ public class Caracol implements Runnable{
 			System.out.println(nombre + ", distancia recorrida: " + distanciaRecorrida);
 			distanciaRecorrida += velocidad;
 			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
 
 		}
 		
 		//Asigna la posicion
 		posiciones.put(posicion, nombre);
 		posicion++;
+		
+		if(posicion == 6) {
+			resultados();
+		}
 	
 	}
 
-	public HashMap<Integer, String> getPosiciones() {
-		return posiciones;
-	}
-
-	public void setPosiciones(HashMap<Integer, String> posiciones) {
-		this.posiciones = posiciones;
+	public void resultados() {
+		
+		for(int i = 1; i <= 5; i++) {
+			System.out.println("Nº " + i + ": " + posiciones.get(i));
+		}
+		
 	}
 
 

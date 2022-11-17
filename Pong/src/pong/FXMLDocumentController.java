@@ -427,7 +427,7 @@ public class FXMLDocumentController implements Initializable {
         
         puntosJugador1 = 0;
         puntosJugador2 = 0;
-        
+        agrandarJugador(player1);
         
         animationBall.start();
            

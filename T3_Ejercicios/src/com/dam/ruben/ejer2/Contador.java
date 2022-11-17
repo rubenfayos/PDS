@@ -12,12 +12,50 @@ public class Contador implements Runnable{
 		this.nombreHilo = nombreHilo;
 	}
 	
+	
+	
 	@Override
-	public void run() {
+	public synchronized void run() {
 		
 		for(int i = inicioContador; i <= limiteContador; i++) {
 			System.out.println(nombreHilo + ": " + i);
 		}
 			
+	}
+
+
+
+	public int getInicioContador() {
+		return inicioContador;
+	}
+
+
+
+	public void setInicioContador(int inicioContador) {
+		this.inicioContador = inicioContador;
+	}
+
+
+
+	public int getLimiteContador() {
+		return limiteContador;
+	}
+
+
+
+	public void setLimiteContador(int limiteContador) {
+		this.limiteContador = limiteContador;
+	}
+
+
+
+	public String getNombreHilo() {
+		return nombreHilo;
+	}
+
+
+
+	public void setNombreHilo(String nombreHilo) {
+		this.nombreHilo = nombreHilo;
 	}
 }
