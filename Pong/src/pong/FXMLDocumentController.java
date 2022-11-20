@@ -435,15 +435,16 @@ public class FXMLDocumentController implements Initializable {
     
     private void PowerUp(){
          
-
+   
+        animationBall = new AnimationTimer() {
+            
         Image img = new Image(this.getClass().getResource("/res/marselo.png").toString());
         ImageView powerUp = new ImageView(img);
         powerUp.setFitHeight(100);
         powerUp.setFitWidth(100);
         powerUp.setLayoutX(325);
         tablero.getChildren().add(powerUp);
-            
-        animationBall = new AnimationTimer() {
+        
         
         double posXPowerUp = 0;
         double posYPowerUp = 0;

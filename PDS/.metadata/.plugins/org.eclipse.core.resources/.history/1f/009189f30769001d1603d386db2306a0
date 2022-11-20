@@ -1,0 +1,18 @@
+package com.dam.ejer5_2;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		ControlSemaforos cs = new ControlSemaforos();
+		cs.setEstadoSemaforo(1);
+		
+		Thread semaforo1 = new Thread(cs);
+		semaforo1.start();
+		
+		cs.setEstadoSemaforo(2);
+		Thread semaforo2 = new Thread(cs);
+
+	}
+
+}
