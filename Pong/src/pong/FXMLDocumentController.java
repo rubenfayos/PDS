@@ -427,8 +427,8 @@ public class FXMLDocumentController implements Initializable {
         
         puntosJugador1 = 0;
         puntosJugador2 = 0;
+        agrandarJugador(player1);
         
-        PowerUp();
         animationBall.start();
            
     }
@@ -452,10 +452,8 @@ public class FXMLDocumentController implements Initializable {
         @Override
         public void handle(long now) {
             
-        posXPowerUp = 
-        posYPowerUp = pelota2.getCenterY();
-
-        pelota2.setCenterX(posX2 + velocidadX2);
+        
+        /*
         pelota2.setCenterY(posY2 + velocidadY2);
         
         //Comprueba si la posicion de la pelota y el jugador2 coinciden
@@ -482,26 +480,9 @@ public class FXMLDocumentController implements Initializable {
         Shape shapeCollisionDerecha_pelota2 = Shape.intersect(margenDerecha, pelota2);
         boolean colisionVaciaDerecha_pelota2 = shapeCollisionDerecha_pelota2.getBoundsInLocal().isEmpty();
         
-        if (!colisionVacia1_pelota2){
-            //Velocidad negativa para cambiar direccion
-            velocidadX2 = -8;
-        }
-
-        if (!colisionVacia2_pelota2){
-            velocidadX2 = 8;
-        }
-    
-        if (!colisionVaciaBajo_pelota2){
-            //Velocidad negativa para cambiar direccion
-            velocidadY2 = -3;
-        }
-    
-        if (!colisionVaciaArriba_pelota2){
-            velocidadY2 = 3;
-        }
+        */
+        
+    }};
         
     }
-        
-    }
-    
 }

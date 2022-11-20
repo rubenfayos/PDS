@@ -6,11 +6,22 @@ public class Main {
 		
 		int numHilos = 5;
 		
+		Contador c = new Contador(1, 5, "Hilo 1");
+		
 		for(int i = 1; i <= numHilos; i++) {
-			Contador c = new Contador(1*i, 5*i, "Hilo " + i);
+			c.setNombreHilo("Hilo " + i);
+			c.setLimiteContador(5*i);
 			Thread hilo = new Thread(c);
 			hilo.start();
-		}
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}	
 
 
 	}
