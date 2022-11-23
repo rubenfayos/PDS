@@ -1,0 +1,11 @@
+package com.dam.neoHelp;
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		int numHilos = 6;
+
+	}
+
+}
