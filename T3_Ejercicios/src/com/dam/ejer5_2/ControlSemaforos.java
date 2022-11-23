@@ -15,47 +15,66 @@ public class ControlSemaforos implements Runnable{
 
 	public synchronized void encenderSemaforo1() {
 		
-		while(estadoSemaforo == 2) {
+		while(true) {
+		
+			while(estadoSemaforo == 2) {
+				
+				System.out.println("Semaforo 1: rojo ");
+				
+				try {
+					//Esperar semaforo 2
+					wait();
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
 			
-			System.out.println("Semaforo 1: rojo ");
+			System.out.println("Semaforo 1: verde ");
 			
 			try {
-				//Esperar semaforo 2
-				wait();
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-		}
-		
-		System.out.println("Semaforo 1: verde ");
+				
+			estadoSemaforo = 2;
+			notifyAll();
 			
-		estadoSemaforo = 2;
-		notifyAll();
+		}
 			
 	}
 	
 	public synchronized void encenderSemaforo2() {
 		
 		
-		while(estadoSemaforo == 1) {
-			
-			System.out.println("Semaforo 2: rojo ");
-			
-			try {
-				//Esperar semaforo 1
-				wait();
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
+		while(true) {
+		
+			while(estadoSemaforo == 1) {
+				
+				System.out.println("Semaforo 2: rojo ");
+				
+				try {
+					
+					//Esperar semaforo 1
+					wait();
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				
 			}
 			
+			//Como el otro semaforo ahora está rojo pasa este a verde
+			System.out.println("Semaforo 2: verde ");
+			
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			estadoSemaforo = 1;
+			notifyAll();
 		}
-		
-		System.out.println("Semaforo 2: verde ");
-		
-		
-		
-		estadoSemaforo = 1;
-		notifyAll();
 
 		
 	}
@@ -63,26 +82,16 @@ public class ControlSemaforos implements Runnable{
 	@Override
 	public void run() {
 		
-		while(true) {
-			
-			if(Thread.currentThread().getName().equals("s1")) {
-					encenderSemaforo1();
-			}
-				
-			if(Thread.currentThread().getName().equals("s2")) {
-					encenderSemaforo2();
-	
-			}
-			
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+		//Asigna los semaforos
+		if(Thread.currentThread().getName().equals("s1")) {
+				encenderSemaforo1();
 		}
-		
+			
+		if(Thread.currentThread().getName().equals("s2")) {
+				encenderSemaforo2();
+
+		}
+			
 		
 	}
 	

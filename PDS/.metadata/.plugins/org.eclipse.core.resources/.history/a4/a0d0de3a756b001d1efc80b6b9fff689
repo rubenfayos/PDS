@@ -13,7 +13,7 @@ public class ControlSemaforos implements Runnable{
 		this.estadoSemaforo = estadoSemaforo;
 	}
 
-	public  void encenderSemaforo1() {
+	public synchronized void encenderSemaforo1() {
 		
 		while(estadoSemaforo == 2) {
 			
@@ -21,22 +21,21 @@ public class ControlSemaforos implements Runnable{
 			
 			try {
 				//Esperar semaforo 2
-				estadoSemaforo = 2;
 				wait();
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
 		}
 		
-		System.out.print("Semaforo 1: verde ");
-
+		System.out.println("Semaforo 1: verde ");
 			
 		estadoSemaforo = 2;
 		notifyAll();
 			
 	}
 	
-	public  void encenderSemaforo2() {
+	public synchronized void encenderSemaforo2() {
+		
 		
 		while(estadoSemaforo == 1) {
 			
@@ -51,7 +50,9 @@ public class ControlSemaforos implements Runnable{
 			
 		}
 		
-		System.out.print("Semaforo 2: verde ");
+		System.out.println("Semaforo 2: verde ");
+		
+		
 		
 		estadoSemaforo = 1;
 		notifyAll();
@@ -61,16 +62,19 @@ public class ControlSemaforos implements Runnable{
 
 	@Override
 	public void run() {
-			
+		
 		while(true) {
-			encenderSemaforo1();
-			encenderSemaforo2();
 			
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			if(Thread.currentThread().getName().equals("s1")) {
+					encenderSemaforo1();
 			}
+				
+			if(Thread.currentThread().getName().equals("s2")) {
+					encenderSemaforo2();
+	
+			}
+			
+			
 			
 		}
 		

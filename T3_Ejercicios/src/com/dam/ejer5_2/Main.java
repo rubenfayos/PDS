@@ -14,7 +14,7 @@ public class Main {
 		Thread semaforo2 = new Thread(cs);
 		semaforo2.setName("s2");
 		semaforo2.start();
-
+		
 	}
 
 }

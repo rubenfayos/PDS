@@ -15,12 +15,18 @@ public class Contador implements Runnable{
 	
 	
 	@Override
-	public synchronized void run() {
+	public void run() {
 		
-		for(int i = inicioContador; i <= limiteContador; i++) {
-			System.out.println(nombreHilo + ": " + i);
-		}
+		contar(inicioContador, limiteContador, nombreHilo);
 			
+	}
+	
+	public void contar(int inicio, int limite, String nombre) {
+		
+		for(int i = inicio; i <= limite; i++) {
+			System.out.println(nombre + ": " + i);
+		}
+		
 	}
 
 
