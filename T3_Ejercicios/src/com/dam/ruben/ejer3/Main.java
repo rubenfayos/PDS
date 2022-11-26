@@ -11,6 +11,7 @@ public class Main {
 		Caracol c = new Caracol();
 		
 		for(int i = 1; i <= numHilos; i++) {
+			c = new Caracol();
 			Thread hilo = new Thread(c);
 			hilo.setName("Caracol " + i);
 			hilo.start();

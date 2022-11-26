@@ -21,6 +21,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -42,6 +44,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Rectangle player2;
     
+    private Circle pelota2;
+    
     private AnimationTimer animationBall;
     private AnimationTimer animationBall2;
     
@@ -51,13 +55,22 @@ public class FXMLDocumentController implements Initializable {
     private int velocidadX2 = 3;
     private double velocidadY2 = 0;
     
+    private int velocidadXPowerUp;
+    private double velocidadYPowerUp;
+    
     private int velJug1 = 0;
     private int velJug2 = 0;
+    
+    private int rachaJug1 = 0;
+    private int rachaJug2 = 0;
     
     private int puntosJugador1;
     private int puntosJugador2;
     
     private boolean pelotaFuego = false;
+    private boolean pelotaDoble = true;
+    
+    private Circle powerUp;
     
     private AnimationTimer animationPowerUp;
     
@@ -76,6 +89,10 @@ public class FXMLDocumentController implements Initializable {
     private Rectangle margenDerecha;
     @FXML
     private Text marcador;
+    @FXML
+    private Rectangle margenDerechaPowerUp;
+    @FXML
+    private Rectangle margenIzquierdaPowerUp;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -159,9 +176,12 @@ public class FXMLDocumentController implements Initializable {
                 
             //Suma puntos y vuelve a la posicion inicial
             puntosJugador2++;
+            
+            //Le borra la racha al jugador1 y suma la racha
+            rachaJug1 = 0;
+            rachaJug2++;
+            
             actualizarMarcador();
-            pelota.setCenterX(375);
-            pelota.setCenterY(255);
             velocidadX = -3;
             
             //Inclinacion aleatoria
@@ -178,9 +198,12 @@ public class FXMLDocumentController implements Initializable {
             
             //Suma puntos y vuelve a la posicion inicial
             puntosJugador1++;
+            
+            //Le borra la racha al jugador2
+            rachaJug2 = 0;
+            rachaJug1++;
+            
             actualizarMarcador();
-            pelota.setCenterX(375);
-            pelota.setCenterY(255);
             velocidadX = 3;
             
             //Inclinacion aleatoria
@@ -286,12 +309,39 @@ public class FXMLDocumentController implements Initializable {
     }
     
     private void actualizarMarcador(){
+    
+        posicionInicial();
+        devolverTamaño(player1);
+        devolverTamaño(player2);
         
-        if(puntosJugador1 == 4){
-            añadirPelota(-2);
-        }else if(puntosJugador2 == 4){
-            añadirPelota(2);
+        if(rachaJug1 == 3)
+            agrandarJugador(player2);
+        
+        if(rachaJug2 == 3)
+            agrandarJugador(player1);
+        
+        //Desactiva la pelota si está doble
+        if(!pelotaDoble){
+            pelota2.setVisible(false);
+            animationBall2.stop();
         }
+        
+        //El boolean pelota doble sirve para evitar que se dupliquen todo el rato
+        if(puntosJugador1 == 4 && pelotaDoble){
+            añadirPelota(-2);
+            pelotaDoble = false;
+        }else if(puntosJugador2 == 4 && pelotaDoble){
+            añadirPelota(2);
+            pelotaDoble = false;
+            
+        }else if(puntosJugador1 + puntosJugador2 == 5){
+            PowerUp();
+        }
+        
+
+        pelota.setFill(Color.BLUE);
+        pelotaFuego = false;
+
         
         marcador.setText(String.valueOf(puntosJugador1) + " : " + String.valueOf(puntosJugador2));
         if(puntosJugador1 >= 5){
@@ -308,7 +358,7 @@ public class FXMLDocumentController implements Initializable {
     
     private void añadirPelota(int velocidadx){
         
-        Circle pelota2 = new Circle(12);
+        pelota2 = new Circle(12);
         tablero.getChildren().add(pelota2);
         pelota2.setCenterX(350);
         pelota2.setCenterY(255);
@@ -362,11 +412,11 @@ public class FXMLDocumentController implements Initializable {
         
         if (!colisionVacia1_pelota2){
             //Velocidad negativa para cambiar direccion
-            velocidadX2 = -8;
+            velocidadX2 = -6;
         }
 
         if (!colisionVacia2_pelota2){
-            velocidadX2 = 8;
+            velocidadX2 = 6;
         }
     
         if (!colisionVaciaBajo_pelota2){
@@ -382,15 +432,13 @@ public class FXMLDocumentController implements Initializable {
             
             //Suma puntos y vuelve a la posicion inicial
             puntosJugador2++;
-            actualizarMarcador();
-            pelota2.setCenterX(375);
-            pelota2.setCenterY(255);
-            velocidadX2 = 3;
             
-            //Inclinacion aleatoria
-            velocidadY2 = Math.random()*6;
-            if(velocidadY2>3)
-            velocidadY2 = velocidadY2-6;
+            //Le borra la racha al jugador1
+            rachaJug1 = 0;
+            rachaJug2++;
+
+            actualizarMarcador();
+            
         }
         
         
@@ -398,28 +446,33 @@ public class FXMLDocumentController implements Initializable {
             
             //Suma puntos y vuelve a la posicion inicial
             puntosJugador1++;
-            actualizarMarcador();
-            pelota2.setCenterX(375);
-            pelota2.setCenterY(255);
-            velocidadX2 = -3;
             
-            //Inclinacion aleatoria
-            velocidadY2 = Math.random()*6;
-            if(velocidadY2>3)
-            velocidadY2 = velocidadY2-6;
+            //Le borra la racha al jugador1
+            rachaJug2 = 0;
+            rachaJug1++;
+            
+            actualizarMarcador();
         }
         
         }};
         
-        animationBall2.start();
+    animationBall2.start();
          
     }
     
     private void agrandarJugador(Rectangle player){
         
-        player.setHeight(300);
+        player.setHeight(150);
         player.setLayoutY(100);
         
+    }
+    
+    private void devolverTamaño(Rectangle player){
+        
+        if(player.getHeight() == 150){
+            player.setHeight(100);
+            player.setLayoutY(100);
+        }
     }
 
     @FXML
@@ -427,62 +480,107 @@ public class FXMLDocumentController implements Initializable {
         
         puntosJugador1 = 0;
         puntosJugador2 = 0;
-        agrandarJugador(player1);
         
         animationBall.start();
            
     }
     
-    private void PowerUp(){
-         
-   
-        animationBall = new AnimationTimer() {
+    
+    private void posicionInicial(){
+        
+        pelota.setCenterX(375);
+        pelota.setCenterY(255);
+        
+    }
             
+            
+    private void PowerUp(){
+        
         Image img = new Image(this.getClass().getResource("/res/marselo.png").toString());
-        ImageView powerUp = new ImageView(img);
-        powerUp.setFitHeight(100);
-        powerUp.setFitWidth(100);
-        powerUp.setLayoutX(325);
+        
+        //Crea un circulo que será el power up
+        this.powerUp = new Circle(20);
+        
+        //Le asigna como fondo la imagen
+        powerUp.setFill(new ImagePattern(img));
+        
         tablero.getChildren().add(powerUp);
         
-        
-        double posXPowerUp = 0;
-        double posYPowerUp = 0;
-        
-        @Override
-        public void handle(long now) {
+        //Le asigna la direccion dependiendo de quien va perdiendo
+        velocidadXPowerUp = 2;
+
+        //Inclinacion aleatoria
+        velocidadYPowerUp = Math.random()*6;
+
+        if(velocidadYPowerUp > 3)
+            velocidadYPowerUp = velocidadYPowerUp-6;
+
+         
+        animationPowerUp = new AnimationTimer() {
             
+            
+            double posXPowerUp = 300;
+            double posYPowerUp = 300;
+
+            @Override
+            public void handle(long now) {
+                
+                posXPowerUp += velocidadXPowerUp;
+                posYPowerUp += velocidadYPowerUp;
+                
+                powerUp.setRotate(powerUp.getRotate() + 3);
+                
+                powerUp.setLayoutX(posXPowerUp);
+                powerUp.setLayoutY(posYPowerUp);
+
+
+                //Comprueba si choca abajo
+                Shape shapeCollisionBajo_pelota2 = Shape.intersect(margenBajo, powerUp);
+                boolean colisionVaciaBajo_powerUp = shapeCollisionBajo_pelota2.getBoundsInLocal().isEmpty();
+
+                //Comprueba si choca arriba
+                Shape shapeCollisionArriba_pelota2 = Shape.intersect(margenArriba, powerUp);
+                boolean colisionVaciaArriba_powerUp = shapeCollisionArriba_pelota2.getBoundsInLocal().isEmpty();
+
+                //Comprueba si la pelota choca con la izquierda
+                Shape shapeCollisionIzquierda_pelota2 = Shape.intersect(margenIzquierdaPowerUp, powerUp);
+                boolean colisionVaciaIzquierda_powerUp = shapeCollisionIzquierda_pelota2.getBoundsInLocal().isEmpty();
+
+                //comprueba si la pelota choca con la derecha
+                Shape shapeCollisionDerecha_pelota2 = Shape.intersect(margenDerechaPowerUp, powerUp);
+                boolean colisionVaciaDerecha_powerUp = shapeCollisionDerecha_pelota2.getBoundsInLocal().isEmpty();
+
+                //comprueba si la pelota choca con el PowerUp
+                Shape shapeCollisionPowerUp_Pelota = Shape.intersect(pelota, powerUp);
+                boolean colisionVaciaPelota_PowerUp= shapeCollisionPowerUp_Pelota.getBoundsInLocal().isEmpty();
+
+                if (!colisionVaciaBajo_powerUp) 
+                    velocidadYPowerUp = -3;
+
+
+                if(!colisionVaciaArriba_powerUp)
+                    velocidadYPowerUp = 3;
+
+                if(!colisionVaciaIzquierda_powerUp)
+                    velocidadXPowerUp = 2;
+
+
+                if(!colisionVaciaDerecha_powerUp)
+                    velocidadXPowerUp = -2;
+
+                if(!colisionVaciaPelota_PowerUp){
+
+                    //Activa la pelota de fuego
+                    pelotaFuego = true;
+                    pelota.setFill(Color.RED);
+
+                }
+            
+        }};
         
-        /*
-        pelota2.setCenterY(posY2 + velocidadY2);
-        
-        //Comprueba si la posicion de la pelota y el jugador2 coinciden
-        Shape shapeCollision1_pelota2 = Shape.intersect(player2, pelota2);
-        boolean colisionVacia1_pelota2 = shapeCollision1_pelota2.getBoundsInLocal().isEmpty();
-        
-        //Comprueba si la posicion de la pelota y el jugador1 coinciden
-        Shape shapeCollision2_pelota2 = Shape.intersect(player1, pelota2);
-        boolean colisionVacia2_pelota2 = shapeCollision2_pelota2.getBoundsInLocal().isEmpty();
-        
-        //Comprueba si choca abajo
-        Shape shapeCollisionBajo_pelota2 = Shape.intersect(margenBajo, pelota2);
-        boolean colisionVaciaBajo_pelota2 = shapeCollisionBajo_pelota2.getBoundsInLocal().isEmpty();
- 
-        //Comprueba si choca arriba
-        Shape shapeCollisionArriba_pelota2 = Shape.intersect(margenArriba, pelota2);
-        boolean colisionVaciaArriba_pelota2 = shapeCollisionArriba_pelota2.getBoundsInLocal().isEmpty();
-        
-        //Comprueba si la pelota choca con la izquierda
-        Shape shapeCollisionIzquierda_pelota2 = Shape.intersect(margenIzquierda, pelota2);
-        boolean colisionVaciaIzquierda_pelota2 = shapeCollisionIzquierda_pelota2.getBoundsInLocal().isEmpty();
-        
-        //comprueba si la pelota choca con la derecha
-        Shape shapeCollisionDerecha_pelota2 = Shape.intersect(margenDerecha, pelota2);
-        boolean colisionVaciaDerecha_pelota2 = shapeCollisionDerecha_pelota2.getBoundsInLocal().isEmpty();
-        
-        */
-        
-    }};
+        animationPowerUp.start();
         
     }
 }
+
+

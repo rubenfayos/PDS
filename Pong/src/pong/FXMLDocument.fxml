@@ -14,12 +14,14 @@
       <Pane fx:id="tablero" layoutX="25.0" layoutY="61.0" prefHeight="500.0" prefWidth="750.0" style="-fx-background-color: white;">
          <children>
             <Circle fx:id="pelota" centerX="375.0" centerY="255.0" fill="DODGERBLUE" radius="12.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
-            <Rectangle fx:id="player1" arcHeight="5.0" arcWidth="3.0" height="160.0" layoutX="20.0" layoutY="170.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-            <Rectangle fx:id="player2" arcHeight="5.0" arcWidth="3.0" height="160.0" layoutX="720.0" layoutY="170.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+            <Rectangle fx:id="player1" arcHeight="5.0" arcWidth="3.0" height="100.0" layoutX="20.0" layoutY="170.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+            <Rectangle fx:id="player2" arcHeight="5.0" arcWidth="3.0" height="100.0" layoutX="720.0" layoutY="170.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
             <Rectangle fx:id="margenIzquierda" arcHeight="5.0" arcWidth="5.0" fill="#f2f2f2" height="500.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1.0" />
             <Rectangle fx:id="margenDerecha" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="500.0" layoutX="749.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1.0" />
             <Rectangle fx:id="margenBajo" arcHeight="5.0" arcWidth="5.0" fill="#f2f2f2" height="1.0" layoutY="499.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="750.0" />
             <Rectangle fx:id="margenArriba" arcHeight="5.0" arcWidth="5.0" fill="#f2f2f2" height="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="750.0" />
+            <Rectangle fx:id="margenDerechaPowerUp" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="500.0" layoutX="638.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1.0" />
+            <Rectangle fx:id="margenIzquierdaPowerUp" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="500.0" layoutX="135.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1.0" />
          </children>
       </Pane>
       <Text fx:id="marcador" layoutX="278.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 : 0" textAlignment="CENTER" wrappingWidth="244.2265625">
