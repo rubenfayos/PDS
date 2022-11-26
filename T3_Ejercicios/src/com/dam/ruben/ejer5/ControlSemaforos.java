@@ -2,56 +2,97 @@ package com.dam.ruben.ejer5;
 
 public class ControlSemaforos implements Runnable{
 	
-	private int estado;
+	//1 = semaforo1 | 2 = semaforo2
+	private int estadoSemaforo;
 	
-	
-	
-	@Override
-	public void run() {
+	public int getEstadoSemaforo() {
+		return estadoSemaforo;
+	}
 
-		EncenderSemaforo1();
-		EncenderSemaforo2();
+	public void setEstadoSemaforo(int estadoSemaforo) {
+		this.estadoSemaforo = estadoSemaforo;
+	}
+
+	public synchronized void encenderSemaforo1() {
+		
+		while(true) {
+		
+			while(estadoSemaforo == 2) {
+				
+				System.out.println("Semaforo 1: rojo ");
+				
+				try {
+					//Esperar semaforo 2
+					wait();
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+			System.out.println("Semaforo 1: verde ");
+			
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+				
+			estadoSemaforo = 2;
+			notifyAll();
+			
+		}
 			
 	}
 	
-	
-	public void EncenderSemaforo1() {
+	public synchronized void encenderSemaforo2() {
 		
-		System.out.println(Thread.currentThread().getName());
 		
-		if(estado == 1) {
-			System.out.println("Semaforo en verde");
-		}else {
-			System.out.println("Semaforo en rojo");
+		while(true) {
+		
+			while(estadoSemaforo == 1) {
+				
+				System.out.println("Semaforo 2: rojo ");
+				
+				try {
+					
+					//Esperar semaforo 1
+					wait();
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+			
+			//Como el otro semaforo ahora está rojo pasa este a verde
+			System.out.println("Semaforo 2: verde ");
+			
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			estadoSemaforo = 1;
+			notifyAll();
 		}
+
 		
+	}
+
+	@Override
+	public void run() {
+		
+		//Asigna los semaforos
+		if(Thread.currentThread().getName().equals("s1")) {
+				encenderSemaforo1();
+		}
+			
+		if(Thread.currentThread().getName().equals("s2")) {
+				encenderSemaforo2();
+
+		}
+			
 		
 	}
 	
-	public void EncenderSemaforo2() {
-		
-		
-		System.out.println(Thread.currentThread().getName());
-		
-		if(estado == 1) {
-			System.out.println("Semaforo en rojo");
-		}else {
-			System.out.println("Semaforo en verde");
-		}
-		
-	}
-
-
-
-	public int getEstado() {
-		return estado;
-	}
-
-
-
-	public void setEstado(int estado) {
-		this.estado = estado;
-	}
-
-
 }

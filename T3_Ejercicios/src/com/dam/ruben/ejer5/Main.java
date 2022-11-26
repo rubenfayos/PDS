@@ -2,22 +2,19 @@ package com.dam.ruben.ejer5;
 
 public class Main {
 
-	public static void main(String[] args) throws InterruptedException {
-		
-		ControlSemaforos cs = new ControlSemaforos();
-		cs.setEstado(1);
-		
-		Thread hilo = new Thread(cs);
-		hilo.setName("Hilo 1");
-		hilo.start();
-		
-		Thread hilo2 = new Thread(cs);
-		hilo2.setName("Hilo 2");
-		hilo2.start();
-		
-		hilo.start();
-		hilo2.start();
+	public static void main(String[] args) {
 
+		ControlSemaforos cs = new ControlSemaforos();
+		cs.setEstadoSemaforo(2);
+		
+		Thread semaforo1 = new Thread(cs);
+		semaforo1.setName("s1");
+		semaforo1.start();
+		
+		Thread semaforo2 = new Thread(cs);
+		semaforo2.setName("s2");
+		semaforo2.start();
+		
 	}
 
 }
