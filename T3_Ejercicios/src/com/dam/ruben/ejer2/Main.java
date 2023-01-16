@@ -10,14 +10,15 @@ public class Main {
 		
 		for(int i = 1; i <= numHilos; i++) {
 			c.setNombreHilo("Hilo " + i);
-			c.setLimiteContador(5*i);
+			c.setLimiteContador(500*i);
 			Thread hilo = new Thread(c);
 			hilo.start();
+			
 			
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			

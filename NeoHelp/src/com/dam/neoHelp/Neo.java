@@ -1,49 +1,65 @@
 package com.dam.neoHelp;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Locale;
 
-public class Neo {
+public class Neo implements Runnable{
 	
 	private String nombre;
 	private double posicionNEO;
 	private double velocidadNEO;
+	private BufferedReader br;
 	
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public double getPosicionNEO() {
-		return posicionNEO;
-	}
-	public void setPosicionNEO(double posicionNEO) {
-		this.posicionNEO = posicionNEO;
-	}
-	public double getVelocidadNEO() {
-		return velocidadNEO;
-	}
-	public void setVelocidadNEO(double velocidadNEO) {
-		this.velocidadNEO = velocidadNEO;
-	}
-	
-	public static void main(String[] args) {
+	public Neo() {
 		
-		//Crea un NEO a través de los parámetros leidos y ejecuta el método
-		Neo n = new Neo();
-		n.setNombre(args[0]);
-		n.setPosicionNEO(Double.parseDouble(args[1]));
-		n.setVelocidadNEO(Double.parseDouble(args[2]));
-		
-		n.CalcularProbabilidades();
+		try {
+			
+			this.br = new BufferedReader(new FileReader("D:\\DocumentosPrueba\\NEOs.csv"));
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} 
 		
 	}
 	
+	@Override
+	public void run() {
+		
+		readCsv();
+	}
 	
-	public void CalcularProbabilidades() {
+	public synchronized void readCsv() {
+		
+		String line;
+		
+		try {
+			
+			line = br.readLine();
+			if(line == null)
+				return;
+			
+			String[] values = line.split(",");    // use comma as separator  
+		
+			String nombre = values[0];
+			Double posicionNeo = Double.parseDouble(values[1]);
+			Double VelocidadNEO = Double.parseDouble(values[2]);
+			
+			CalcularProbabilidades(nombre, posicionNeo, VelocidadNEO);
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
+	public void CalcularProbabilidades(String nombre, Double posicionNeo, Double VelocidadNEO) {
 		
 		//Obtiene el tiempo de ejecución
 		long inicio = System.currentTimeMillis();
@@ -78,7 +94,7 @@ public class Neo {
          
         salida += "Tiempo de cálculo: " + tiempo + "\n";
         
-        EscribirFichero(this.nombre, salida);
+        EscribirFichero(nombre, salida);
 
 	}
 	
@@ -103,9 +119,6 @@ public class Neo {
 		
 	}
 	
-	
-	
-
 	
 
 }
