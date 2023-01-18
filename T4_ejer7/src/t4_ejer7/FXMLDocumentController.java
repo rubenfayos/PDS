@@ -31,27 +31,21 @@ public class FXMLDocumentController implements Initializable {
     private TextField paginasText;
     
     private Cliente cliente;
-    private Servidor server;
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        server = new Servidor();
-        Thread serverT = new Thread(server);
-        serverT.start(); 
-        cliente = new Cliente();
-        
-               
-                
+      cliente = new Cliente();  
+                      
     }    
 
     @FXML
     private void ADD(ActionEvent event) {
         
+        
         Libro l = getLibro();
         l.setOperacion(1);
-        l.setTitulo("Titulo");
         
         cliente.Send(l);
         
@@ -60,25 +54,44 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void Delete(ActionEvent event) {
         
+        Libro l = new Libro();
+        l.setId(Integer.parseInt(idText.getText()));
+        l.setOperacion(2);
         
-      
+        cliente.Send(l);
         
     }
 
     @FXML
     private void Edit(ActionEvent event) {
+        
+        Libro l = new Libro();
+        l.setId(Integer.parseInt(idText.getText()));
+        l.setOperacion(3);
+        
+        cliente.Send(l);
+        l = cliente.Get();
+        
+        tituloText.setText(l.getTitulo());
+        
     }
     
     private Libro getLibro(){
         
         Libro l = new Libro();
         
+        l.setId(Integer.parseInt(idText.getText()));
         l.setTitulo(tituloText.getText());
         l.setAutor(autorText.getText());
-        l.setPaginas(200);
+        l.setPaginas(Integer.parseInt(paginasText.getText()));
         
         return l;
         
     }
+
+    @FXML
+    private void StartServer(ActionEvent event) {
+    }
+
     
 }

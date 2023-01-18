@@ -19,17 +19,20 @@ public class Cliente {
 			//Starts the client socket
 			Socket client = new Socket(host,port);
 			
-			//Get the object sent from the server
+			System.out.println("Esperando conexion");
+			
 			ObjectInputStream inObjeto = new ObjectInputStream(client.getInputStream());
+			
+			//Create an output from the socket
+			ObjectOutputStream pMod = new ObjectOutputStream(client.getOutputStream());
+			
+			//Get the object sent from the server
 			Persona p = (Persona) inObjeto.readObject();
 			
 			System.out.println("CLIENTE >> Recibo del servidor: "+p.getName() + " - " + p.getAge() + " - " + p.getSexo());
 			
 			p.setName("Jose Garcia");
 			p.setAge(30);
-			
-			//Create an output from the socket
-			ObjectOutputStream pMod = new ObjectOutputStream(client.getOutputStream());
 			
 			//Send the object
 			pMod.writeObject(p);

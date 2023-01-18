@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class Servidor {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 
 		int port = 5000;
 		
@@ -21,18 +21,23 @@ public class Servidor {
 			
 			Socket client = server.accept();
 			
+			Thread.sleep(5000);
+			
 			//Create a connection between server and client 
 			ObjectOutputStream outObjeto = new ObjectOutputStream(client.getOutputStream());
+			ObjectInputStream inObjeto = new ObjectInputStream(client.getInputStream());
 			
 			Persona p = new Persona("Rubén", 19, 'M');
+			
+			Thread.sleep(5000);
 			
 			//Send the object through the connection
 			outObjeto.writeObject(p);
 			
-			System.err.println("SERVIDOR >> Envio a cliente: " + p.getName() + " - " + p.getAge() + " - " + p.getSex());
+			System.err.println("SERVIDOR >> Envio a cliente: " + p.getName() + " - " + p.getAge() + " - " + p.getSexo());
 			
 			//Get the object from the client
-			ObjectInputStream inObjeto = new ObjectInputStream(client.getInputStream());
+			
 			
 			//Parse the object
 			Persona pMod = (Persona) inObjeto.readObject();

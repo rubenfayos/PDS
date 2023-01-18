@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="321.0" prefWidth="467.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="t4_ejer7.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="321.0" prefWidth="467.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="t4_ejer7.FXMLDocumentController">
     <children>
         <Button layoutX="53.0" layoutY="42.0" minWidth="100.0" onAction="#ADD" text="ADD">
          <font>
@@ -27,5 +27,6 @@
       <TextField fx:id="tituloText" layoutX="160.0" layoutY="168.0" promptText="Titulo" />
       <TextField fx:id="autorText" layoutX="160.0" layoutY="215.0" promptText="Autor" />
       <TextField fx:id="paginasText" layoutX="189.0" layoutY="256.0" prefHeight="26.0" prefWidth="89.0" promptText="Paginas" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#StartServer" text="Button" />
     </children>
 </AnchorPane>

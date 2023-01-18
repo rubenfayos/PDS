@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class Libro implements Serializable{
     
     private String titulo, autor;
-    private int paginas, operacion;
+    private int id, paginas, operacion;
 
     public Libro(String titulo, String autor, int paginas, int operacion) {
         this.titulo = titulo;
@@ -25,8 +25,15 @@ public class Libro implements Serializable{
 
     public Libro() {
     }
-    
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getTitulo() {
         return titulo;
     }

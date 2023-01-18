@@ -15,67 +15,62 @@ public class Cliente {
     int port = 5000;
     private Socket client;
     private ObjectInputStream inObjeto;
-    ObjectOutputStream outObjeto;
+    private ObjectOutputStream outObjeto;
 
-	public Cliente() {
-		
-            try {
-                
-                System.out.println("Starting client...");
-                
-                //Starts the client socket
-                client = new Socket(host,port);
-                
-                //Get the object sent from the server
-                //inObjeto = new ObjectInputStream(client.getInputStream());
-                
+    public Cliente() {
 
-                //Create an output from the socket
-                outObjeto = new ObjectOutputStream(client.getOutputStream());
+        try {
 
-                
-                //inObjeto.close();
-                //client.close();
-                
-            } catch (IOException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-			
-	}
-        
-        public void Send(Libro l){
-            
-            try {
+            System.out.println("Starting client...");
 
-                System.out.println("CLIENTE >> Envio al servidor");
+            //Starts the client socket
+            client = new Socket(host,port);
 
-                //Send the object
-                outObjeto.writeObject(l);
+            //Get the object sent from the server
+            inObjeto = new ObjectInputStream(client.getInputStream());
 
-            } catch (IOException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+
+            //Create an output from the socket
+            outObjeto = new ObjectOutputStream(client.getOutputStream());
+
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
         
-        public Libro Get(){
-            
-            Libro l = null;
-            
-            try {
+    public void Send(Libro l){
 
-                System.out.println("CLIENTE >> Objeto recibido del servidor");
+        try {
 
-                l = (Libro) inObjeto.readObject();
+            System.out.println("CLIENTE >> Envio al servidor");
 
-            } catch (IOException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            return l;
-        
+            //Send the object
+            outObjeto.writeObject(l);
+
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    public Libro Get(){
+
+        Libro l = null;
+
+        try {
+
+            l = (Libro) inObjeto.readObject();
+            System.out.println("CLIENTE >> Objeto recibido del servidor");
+
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return l;
+
+    }
 
 }
