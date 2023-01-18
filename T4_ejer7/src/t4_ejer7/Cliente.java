@@ -1,13 +1,12 @@
 package t4_ejer7;
 
+import compartido.Libro;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import t4_ejer7.Libro;
 
 public class Cliente {
     
@@ -29,7 +28,6 @@ public class Cliente {
             //Get the object sent from the server
             inObjeto = new ObjectInputStream(client.getInputStream());
 
-
             //Create an output from the socket
             outObjeto = new ObjectOutputStream(client.getOutputStream());
 
@@ -43,10 +41,10 @@ public class Cliente {
 
         try {
 
-            System.out.println("CLIENTE >> Envio al servidor");
-
             //Send the object
             outObjeto.writeObject(l);
+            
+            System.out.println("CLIENTE >> Envio al servidor");
 
         } catch (IOException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);

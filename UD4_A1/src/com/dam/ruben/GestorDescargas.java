@@ -25,10 +25,13 @@ public class GestorDescargas {
 			
 			// Abrimos un canal de comunicacion de bytes con la url en cuesti�n.
 			InputStream is = url.openStream();
+			
 			// Con el objeto InputStreamReader podemos convertir bytes en caracteres.
 			InputStreamReader reader = new InputStreamReader(is);
+			
 			// Con el objeto BufferedReader podemos leer bloques enteros de  texto.
 			BufferedReader bReader = new BufferedReader(reader);
+			
 			// Con el objeto fileWriter creamos un fichero en local con lo que hemos leido del servidor.
 			FileWriter escritorFichero = new FileWriter(nombreArchivo);
 			String linea;

@@ -5,6 +5,7 @@ package t4_ejer7;
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXML2.java to edit this template
  */
 
+import compartido.Libro;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -80,7 +81,7 @@ public class FXMLDocumentController implements Initializable {
         
         Libro l = new Libro();
         
-        l.setId(Integer.parseInt(idText.getText()));
+        //l.setId(Integer.parseInt(idText.getText()));
         l.setTitulo(tituloText.getText());
         l.setAutor(autorText.getText());
         l.setPaginas(Integer.parseInt(paginasText.getText()));

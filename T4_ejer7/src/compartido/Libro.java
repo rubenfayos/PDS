@@ -2,15 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package t4_ejer7;
+package compartido;
 
 import java.io.Serializable;
-@SuppressWarnings ("serial")
+
 
 /**
  *
  * @author Ruben Fayos
  */
+@SuppressWarnings ("serial")
 public class Libro implements Serializable{
     
     private String titulo, autor;
