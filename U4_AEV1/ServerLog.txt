@@ -1,0 +1,3 @@
+[Thu Jan 19 09:33:47 CET 2023] Servidor >> Conexion con cliente establecida
+[Thu Jan 19 09:33:51 CET 2023] Servidor >> Peticion de sesion recibida
+[Thu Jan 19 09:33:51 CET 2023] Servidor >> Datos de sesion incorrectos

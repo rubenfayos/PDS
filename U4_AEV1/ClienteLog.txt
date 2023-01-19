@@ -1,0 +1,5 @@
+[Thu Jan 19 09:33:47 CET 2023] Cliente >> Conexión establecida
+[Thu Jan 19 09:33:47 CET 2023] Cliente >> Inicio de sesion
+[Thu Jan 19 09:33:47 CET 2023] Cliente >> Introduce tu nombre de usuario: 
+[Thu Jan 19 09:33:49 CET 2023] Cliente >> Introduce tu contraseña: 
+[Thu Jan 19 09:33:51 CET 2023] Cliente >> Datos de sesion incorrectos
